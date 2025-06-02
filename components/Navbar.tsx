@@ -1,11 +1,11 @@
-import { Link } from "lucide-react"
 import Image from "next/image"
 import NavItems from "./NavItems"
+import Link from "next/link"
 
 const Navbar = () => {
     return (
         <nav className="navbar">
-            <Link>
+            <Link href="/">
                 <div className="flex items-center gap-2.5 cursor-pointer">
                     <Image
                         src={"/images/logo.svg"}
