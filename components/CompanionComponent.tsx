@@ -6,7 +6,6 @@ import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import soundwaves from '../constants/soundwaves.json'
-import { set } from 'zod/v4'
 import { addToSessionHistory } from '@/lib/actions/companion.actions'
 
 
@@ -72,7 +71,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, duration, userN
             vapi.off('speech-start', onSpeechStart);
             vapi.off('speech-end', onSpeechEnd);
         }
-    }, [])
+    })
 
     const toggleMicrophone = () => {
         const isMuted = vapi.isMuted();
