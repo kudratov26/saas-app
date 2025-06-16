@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import soundwaves from '../constants/soundwaves.json'
 import { set } from 'zod/v4'
+import { addToSessionHistory } from '@/lib/actions/companion.actions'
 
 
 enum CallStatus {
@@ -16,7 +17,7 @@ enum CallStatus {
     FINISHED = 'FINISHED',
 }
 
-const CompanionComponent = ({ companionId, subject, topic, name, userName, userImage, voice, style }: CompanionComponentProps) => {
+const CompanionComponent = ({ companionId, subject, topic, name, duration, userName, userImage, voice, style }: CompanionComponentProps) => {
     const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE)
 
     const [isSpeaking, setIsSpeaking] = useState(false)
@@ -38,7 +39,10 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
     useEffect(() => {
         const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
 
-        const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+        const onCallEnd = () => {
+            setCallStatus(CallStatus.FINISHED)
+            addToSessionHistory(companionId)
+        };
 
         const onMessage = (message: Message) => {
             if (message.type === 'transcript' && message.transcriptType === 'final') {
@@ -80,7 +84,7 @@ const CompanionComponent = ({ companionId, subject, topic, name, userName, userI
         setCallStatus(CallStatus.CONNECTING);
         const assitantOverrides = {
             variableValues: {
-                subject, topic, style
+                subject, topic, style, name, duration
             },
             clientMessages: ['transcript'],
             serverMessages: [],

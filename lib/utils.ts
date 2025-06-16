@@ -19,7 +19,7 @@ export const configureAssistant = (voice: string, style: string) => {
   const vapiAssistant: CreateAssistantDTO = {
     name: "Companion",
     firstMessage:
-        "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+        "Hello there, my name is {{name}}. let's start the {{duration}} minutes session . Today we'll be talking about {{topic}}.",
     transcriber: {
       provider: "deepgram",
       model: "nova-3",
@@ -40,7 +40,7 @@ export const configureAssistant = (voice: string, style: string) => {
       messages: [
         {
           role: "system",
-          content: `Your Name is {{ name }}. You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject with limited time, its {{ duration }}.
+          content: `Your Name is {{ name }}. You are a highly knowledgeable tutor teaching a real-time voice session with a student. Your goal is to teach the student about the topic and subject with limited time, its {{ duration }} minutes.
 
                     Tutor Guidelines:
                     Stick to the given topic - {{ topic }} and subject - {{ subject }} and teach the student about it.
